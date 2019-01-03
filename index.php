@@ -11,8 +11,9 @@ try {
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
   // insert
-  $db->exec("insert into users (name, score) values ('taguchi', 55)");
-  echo "user added!";
+  $stmt = $db->prepare("insert into users (name, score) values (?, ?)");
+  $stmt->execute(['taguthi', 44]);
+  echo "inserted: " . $db->lastInsertId();
 
   // disconnect
   $db = null;

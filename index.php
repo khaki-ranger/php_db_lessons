@@ -10,21 +10,13 @@ try {
   $db = new PDO(PDO_DSN, DB_USERNAME, DB_PASSWORd);
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-  // insert
-  $stmt = $db->prepare("insert into users (name, score) values (?, ?)");
-  
-  $name = 'taguchi';
-  $stmt->bindValue(1, $name, PDO::PARAM_STR);
-
-  $stmt->bindParam(2, $score, PDO::PARAM_INT);
-  $score = 52;
-  $stmt->execute();
-  $score = 44;
-  $stmt->execute();
-  $score = 6;
-  $stmt->execute();
-
-  echo "inserted: " . $db->lastInsertId();
+  // select all
+  $stmt = $db->query("select * from users");
+  $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  foreach ($users as $user) {
+    var_dump($user);
+  }
+  echo $stmt->rowCount() . " records found,";
 
   // disconnect
   $db = null;

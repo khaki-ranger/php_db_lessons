@@ -15,11 +15,13 @@ try {
   
   $name = 'taguchi';
   $stmt->bindValue(1, $name, PDO::PARAM_STR);
-  $score = 23;
-  $stmt->bindValue(2, $score, PDO::PARAM_INT);
+
+  $stmt->bindParam(2, $score, PDO::PARAM_INT);
+  $score = 52;
   $stmt->execute();
   $score = 44;
-  $stmt->bindValue(2, $score, PDO::PARAM_INT);
+  $stmt->execute();
+  $score = 6;
   $stmt->execute();
 
   echo "inserted: " . $db->lastInsertId();

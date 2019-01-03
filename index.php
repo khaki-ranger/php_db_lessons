@@ -11,8 +11,17 @@ try {
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
   // insert
-  $stmt = $db->prepare("insert into users (name, score) values (:name, :score)");
-  $stmt->execute(['name'=>'fkoji', 'score'=>80]);
+  $stmt = $db->prepare("insert into users (name, score) values (?, ?)");
+  
+  $name = 'taguchi';
+  $stmt->bindValue(1, $name, PDO::PARAM_STR);
+  $score = 23;
+  $stmt->bindValue(2, $score, PDO::PARAM_INT);
+  $stmt->execute();
+  $score = 44;
+  $stmt->bindValue(2, $score, PDO::PARAM_INT);
+  $stmt->execute();
+
   echo "inserted: " . $db->lastInsertId();
 
   // disconnect

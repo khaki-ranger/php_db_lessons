@@ -20,14 +20,22 @@ try {
   $db = new PDO(PDO_DSN, DB_USERNAME, DB_PASSWORd);
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-  // select
-  // FETCH_CLASS
-  $stmt = $db->query("select * from users");
-  $users = $stmt->fetchAll(PDO::FETCH_CLASS, 'User');
-  foreach ($users as $user) {
-    $user->show();
-  }
-  echo $stmt->rowCount() . " records found,";
+  // update
+  $stmt = $db->prepare("update users set score = :score where name = :name");
+  $stmt->execute([
+    ':score' => 100,
+    ':name' => 'taguchi'
+  ]);
+
+  echo 'row updated: ' . $stmt->rowCount();
+
+  // delete
+  $stmt = $db->prepare("delete from users where name = :name");
+  $stmt->execute([
+    ':name' => 'dotinstall'
+  ]);
+
+  echo 'row deletes: ' . $stmt->rowCount();
 
   // disconnect
   $db = null;
